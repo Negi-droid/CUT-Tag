@@ -1,0 +1,110 @@
+configfile: "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/snakemake_workflow/newconfigfile.yaml"
+
+# print(config)
+# localrules: cat
+
+# include: "snakefilenew"
+
+import sys
+
+def check_gzip(x):
+  gzfiles = [1 if i.endswith("gz") else 0 for i in x]
+  nfiles  = len(x)
+  if (sum(gzfiles) == nfiles):
+    return("zcat")
+  elif (sum(gzfiles) ==0):
+    return("cat")
+  else:
+    sys.stderr.write("All files must be either zipped or unzipped")
+    sys.exit(1)
+
+rule all2:
+  input: 
+    expand("results/genematrix_antibody/{antibody}.gz", antibody = ["H3K27me3","H3K4me3","H3K9ac","Pol2s5p","Ctcf","H3K9me3"]),
+    expand("results/heatmap_ab/{antibody}.png", antibody = ["H3K27me3","H3K4me3","H3K9ac","Pol2s5p","Ctcf","H3K9me3"]),
+
+
+rule computeMatrix_H3K27me3:
+  input:
+#    lambda wildcards: [config['samples'][x]['antibody'] for x in config['samples'].keys() if config['samples'][x]['antibody'] == wildcards.sample]
+    bigwig1 = "results/bigwig_out/P20703_1001.bw",
+    bigwig2 = "results/bigwig_out/P20703_1002.bw",
+    bigwig3 = "results/bigwig_out/P20703_1007.bw",
+  output:
+    matrix = "results/genematrix_antibody/H3K27me3.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig1} {input.bigwig2} {input.bigwig3} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule computeMatrix H3K4me3:
+  input:
+    bigwig4 = "results/bigwig_out/P20703_1003.bw",
+    bigwig5 = "results/bigwig_out/P20703_1004.bw",
+    bigwig6 = "results/bigwig_out/P20703_1008.bw",
+  output:
+    matrix = "results/genematrix_antibody/H3K4me3.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig4} {input.bigwig5} {input.bigwig6} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule computeMatrix H3K9ac:
+  input:
+    bigwig7 = "results/bigwig_out/P20703_1005.bw",
+    bigwig8 = "results/bigwig_out/P20703_1009.bw",
+    bigwig9 = "results/bigwig_out/P20703_1010.bw",
+  output:
+    matrix = "results/genematrix_antibody/H3K9ac.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig7} {input.bigwig8} {input.bigwig9} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule computeMatrix Pol2:
+  input:
+    bigwig10 = "results/bigwig_out/P20703_1006.bw",
+    bigwig11 = "results/bigwig_out/P20703_1011.bw",
+  output:
+    matrix = "results/genematrix_antibody/Pol2s5p.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig10}  {input.bigwig11}  -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule computeMatrix Ctcf:
+  input:
+    bigwig12 = "results/bigwig_out/P20703_1012.bw",
+    bigwig13 = "results/bigwig_out/P20703_1013.bw",
+  output:
+    matrix = "results/genematrix_antibody/Ctcf.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig12} {input.bigwig13} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule computeMatrix H3K9me3:
+  input:
+    bigwig14 = "results/bigwig_out/P20703_1014.bw",
+    bigwig15 = "results/bigwig_out/P20703_1015.bw",
+  output:
+    matrix = "results/genematrix_antibody/H3K9me3.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig14} {input.bigwig15} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule plotHeadmap:
+  input:
+    matrix = "results/genematrix_antibody/{sample}.gz",
+  output:
+    heatmap = "results/heatmap_ab/{sample}.png",
+  threads: 4
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; plotHeatmap -m {input.matrix} -out {output.heatmap} --heatmapWidth 10"

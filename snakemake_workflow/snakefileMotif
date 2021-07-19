@@ -1,0 +1,59 @@
+#rule for ctcf motif analysis 
+rule all:
+  input:
+    expand("results/macs2/{sample}_top_peaks.bed", sample = ["P20703_1012","P20703_1013"]),
+    expand("results/macs2/{sample}_equalsize.bed", sample = ["P20703_1012","P20703_1013"]),
+    expand("results/macs2/{sample}_equalsize.fa", sample = ["P20703_1012","P20703_1013"]),
+    expand("results/jasper/jasper.txt", sample = ["P20703_1012","P20703_1013"]),
+    expand("results/memechip_out_{sample}", sample = ["P20703_1012","P20703_1013"]),
+ #   expand("results/memechip_out/{sample}_meme-chip.html", sample = ["P20703_1012","P20703_1013"]),
+ #   expand("results/memechip_out/{sample}_summary.tsv", sample = ["P20703_1012","P20703_1013"]),
+ #   expand("results/memechip_out/{sample}_combinedmeme.txt", sample = ["P20703_1012","P20703_1013"]),
+
+rule select_significant:
+  input:
+    summits = "results/macs2/{sample}_summits.bed",
+  output:
+    top = "results/macs2/{sample}_top_peaks.bed",
+  shell:
+    "set +o pipefail; sort -k5gr {input.summits} | head -10000 > {output.top}"
+
+   
+rule resize_the_peaks:
+  input:
+    top = "results/macs2/{sample}_top_peaks.bed",
+  output:
+    equal = "results/macs2/{sample}_equalsize.bed",
+  shell: 
+    "module load bioinfo-tools; module load BEDOPS/2.4.39; bedops --range 100 --everything {input.top} > {output.equal}"
+
+rule getfasta:
+  input:
+    equal = "results/macs2/{sample}_equalsize.bed",
+  output: 
+    fasta = "results/macs2/{sample}_equalsize.fa",
+  params:
+    mm = "/proj/uppstore2017150/private/marek/index/bowtie2/mm10_iGenomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa"
+  shell: 
+    "module load bioinfo-tools; module load BEDTools/2.29.2; bedtools getfasta -fi {params.mm} -bed {input.equal} -fo {output.fasta}"
+
+rule download_JASPAR:
+  params: 
+    jasper = "http://jaspar.genereg.net/download/CORE/JASPAR2020_CORE_vertebrates_non-redundant_pfms_meme.txt",
+  output: 
+    "results/jasper/jasper.txt",
+  shell: 
+    "wget -O {output} {params.jasper}"
+
+rule MEME:
+  input:
+    fasta = "results/macs2/{sample}_equalsize.fa",
+    jasper = "results/jasper/jasper.txt",
+  output: 
+    out_dir = directory("results/memechip_out_{sample}"),
+   # meme_chip = "results/memechip_out/{sample}_meme-chip.html",
+   # summary = "results/memechip_out/{sample}_summary.tsv",
+   # combined = "results/memechip_out/{sample}_combinedmeme.txt",    
+  shell:  
+    "module load bioinfo-tools; module load MEMEsuite/5.1.1; meme-chip -oc {output.out_dir}  -dreme-m 10 -meme-nmotifs 10 -db {input.jasper} {input.fasta}"
+

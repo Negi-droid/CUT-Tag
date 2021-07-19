@@ -1,0 +1,181 @@
+configfile: "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/snakemake_workflow/newconfigfile.yaml"
+
+# print(config)
+# localrules: cat
+localrules: download_blacklist
+
+import sys
+
+def check_gzip(x):
+  gzfiles = [1 if i.endswith("gz") else 0 for i in x]
+  nfiles  = len(x)
+  if (sum(gzfiles) == nfiles):
+    return("zcat")
+  elif (sum(gzfiles) ==0):
+    return("cat")
+  else:
+    sys.stderr.write("All files must be either zipped or unzipped")
+    sys.exit(1)
+    
+rule all:
+  input:
+    expand("results/bigwig_out/{sample}.bw", sample = config['samples'].keys()),
+    expand("results/markedduplicates/{sample}_marked_duplicates.bam", sample = config['samples'].keys()),
+    expand("results/markedduplicates/{sample}_marked_dup_metrics.txt", sample = config['samples'].keys()),
+#    expand("results/blacklist/lists/mm10-blacklist.v2.bed.gz", sample = config['samples'].keys()),
+    expand("results/bam_nobl/{sample}.bam", sample = config['samples'].keys()),
+    expand("results/macs2/{sample}_peaks.narrowPeak", sample = config['samples'].keys()),
+    expand("results/macs2/{sample}_peaks.xls", sample = config['samples'].keys()),
+    expand("results/macs2/{sample}_summits.bed", sample = config['samples'].keys()),
+    expand("results/genematrix/{sample}.gz", sample = config['samples'].keys()),
+    expand("results/heatmap/{sample}.png", sample = config['samples'].keys()),
+
+rule cat:
+  input:
+    R1_1 = lambda wildcards: config['samples'][wildcards.sample]['R1_1'],
+    R1_2 = lambda wildcards: config['samples'][wildcards.sample]['R1_2'],
+    R2_1 = lambda wildcards: config['samples'][wildcards.sample]['R2_1'],
+    R2_2 = lambda wildcards: config['samples'][wildcards.sample]['R2_2'],
+  output:
+    R1_cat = temp("results/fastq_cat/{sample}_R1.fastq"),
+    R2_cat = temp("results/fastq_cat/{sample}_R2.fastq"),
+  params:
+    command = lambda wildcards: check_gzip([config['samples'][wildcards.sample][x] for x in ["R1_1","R1_2","R2_1","R2_2"]])
+  threads: 2
+  shell: "{params.command} {input.R1_1} {input.R1_2} > {output.R1_cat} ; {params.command} {input.R2_1} {input.R2_2} > {output.R2_cat}"
+  
+
+rule trim:
+  input:
+    R1 = "results/fastq_cat/{sample}_R1.fastq",
+    R2 = "results/fastq_cat/{sample}_R2.fastq",
+  output:
+    R1_trimmed = "results/fastq_trimmed/{sample}_R1_001_trimmed.fastq.gz",
+    R2_trimmed = "results/fastq_trimmed/{sample}_R2_001_trimmed.fastq.gz",
+    R1_unpaired = "results/fastq_trimmed/{sample}_R1_001_unpaired.fastq.gz",
+    R2_unpaired = "results/fastq_trimmed/{sample}_R2_001_unpaired.fastq.gz",
+  threads: 8
+  shell:
+    """module load bioinfo-tools
+       module load trimmomatic
+       trimmomatic PE -threads {threads} -phred33 {input.R1} {input.R2} {output.R1_trimmed} {output.R1_unpaired} {output.R2_trimmed} {output.R2_unpaired} ILLUMINACLIP:/sw/apps/bioinfo/trimmomatic/0.36/rackham/adapters/NexteraPE-PE.fa:2:15:4:4:true LEADING:20 TRAILING:20 SLIDINGWINDOW:4:15 MINLEN:25"""
+       
+       
+rule map_bowtie2:
+  input:
+    R1 = "results/fastq_trimmed/{sample}_R1_001_trimmed.fastq.gz",
+    R2 = "results/fastq_trimmed/{sample}_R2_001_trimmed.fastq.gz",
+  output:
+    bam = "results/bowtie2_out/{sample}.bam",
+  params:
+    index = "/proj/uppstore2017150/private/marek/index/bowtie2/mm10_iGenomes/Mus_musculus/Ensembl/GRCm38/Sequence/Bowtie2Index/mm10"
+  threads: 8
+  shell:
+    """
+    module load bioinfo-tools
+    module load bowtie2
+    module load samtools
+    bowtie2 -p {threads} --dovetail -x {params.index}  -1 {input.R1}  -2 {input.R2} | samtools view -f 2 -bS > {output.bam}
+    """
+    
+rule sort_samtools:
+  input:
+    bam = "results/bowtie2_out/{sample}.bam"
+  output:
+    sort = "results/bam_sorted/{sample}.bam"
+  shell:
+    "module load bioinfo-tools ; module load samtools; samtools sort {input.bam} > {output.sort}"
+
+rule markduplicates:
+  input:
+    bam = "results/bam_sorted/{sample}.bam",
+  output:
+    O = "results/markedduplicates/{sample}_marked_duplicates.bam",
+    M = "results/markedduplicates/{sample}_marked_dup_metrics.txt",
+  threads: 4
+  shell: "module load bioinfo-tools ;  module load picard ; java -jar $PICARD_ROOT/picard.jar MarkDuplicates REMOVE_DUPLICATES=true I={input.bam} O={output.O} M={output.M}"
+
+rule download_blacklist:
+  params:
+    url            = "http://mitra.stanford.edu/kundaje/akundaje/release/blacklists/mm10-mouse/mm10.blacklist.bed.gz",
+    out_folder     = "results/blacklist/",
+  output:
+    "results/blacklist/mm10-mouse/mm10.blacklist.bed",
+  shell:
+    "wget -O - {params.url} | gunzip -c  | sed 's/chr//g' > {output}"
+
+rule filter_blacklist:
+  input:
+    bl = "results/blacklist/mm10-mouse/mm10.blacklist.bed",
+    bam = "results/markedduplicates/{sample}_marked_duplicates.bam",
+  output:
+    bam_nobl = "results/bam_nobl/{sample}.bam"
+  shell:
+    "module load bioinfo-tools; module load BEDTools/2.29.2; bedtools intersect -v -abam {input.bam} -b {input.bl} > {output.bam_nobl}"
+
+rule index_samtools:
+  input:
+    sort = "results/bam_nobl/{sample}.bam",
+  output:
+    index = "results/bam_nobl/{sample}.bam.bai",
+  shell:
+    "module load bioinfo-tools ; module load samtools; samtools index {input}"
+
+rule bigwig:
+  input:
+    sort = "results/bam_nobl/{sample}.bam",
+    index = "results/bam_nobl/{sample}.bam.bai",
+  output:
+    bigwig = "results/bigwig_out/{sample}.bw",
+  threads: 8
+  shell: "module load bioinfo-tools ; module load deepTools ; bamCoverage -b {input.sort} -o {output.bigwig} -p {threads}"
+
+rule macs2:
+  input:
+    bam = "results/bam_nobl/{sample}.bam",
+  output:
+    narrowpeak = "results/macs2/{sample}_peaks.narrowPeak",
+    peaks = "results/macs2/{sample}_peaks.xls",
+    summits = "results/macs2/{sample}_summits.bed",
+  shell: 
+    "module load bioinfo-tools ; module load MACS ; macs2 callpeak -t {input} -g mm  -f BAMPE  -n {wildcards.sample}  --outdir results/macs2/  --nomodel  --nolambda --max-gap 1000  --shift -100  --extsize 200"
+  
+  
+rule computeMatrix:
+  input:
+    bigwig = "results/bigwig_out/{sample}.bw"
+  output:
+    matrix = "results/genematrix/{sample}.gz"
+  threads: 8
+  params:
+    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+
+rule plotHeadmap:
+  input:
+    matrix = "results/genematrix/{sample}.gz"
+  output:
+    heatmap = "results/heatmap/{sample}.png",
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; plotHeatmap -m {input.matrix} -out {output.heatmap} --heatmapWidth 10"
+   
+#rule test:
+#  input:
+#    bigwig = "results/bigwig_out/{sample}.bw"
+#  output:
+#    matrix = "results/genematrixtest/{sample}.gz"
+#  threads: 20
+#  params:
+#    mm = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus.GRCm38.102_protein_coding_transcript.gtf"
+#  shell:
+#    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig} -R {params.mm} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+#rule heatmaptest:
+#  input:
+#    matrix = "results/genematrixtest/{sample}.gz"
+#  output:
+#    heatmap = "results/heatmaptest/{sample}.png",
+#  shell:
+#    "module load bioinfo-tools ; module load deepTools ; plotHeatmap -m {input.matrix} -out {output.heatmap} --heatmapWidth 10"                  

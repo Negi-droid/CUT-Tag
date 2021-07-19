@@ -1,0 +1,89 @@
+configfile: "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/snakemake_workflow/newconfigfile.yaml"
+
+# print(config)
+# localrules: cat
+
+import sys
+
+def check_gzip(x):
+  gzfiles = [1 if i.endswith("gz") else 0 for i in x]
+  nfiles  = len(x)
+  if (sum(gzfiles) == nfiles):
+    return("zcat")
+  elif (sum(gzfiles) ==0):
+    return("cat")
+  else:
+    sys.stderr.write("All files must be either zipped or unzipped")
+    sys.exit(1)
+
+rule all:
+  input:
+    expand("resultsH3K36/genematrix_specific/{sample}.gz", sample = ["P20703_1016","P20703_1017","P20703_1018","P20703_1019"]),
+    expand("resultsH3K36/heatmap_specific/{sample}.png", sample = ["P20703_1016","P20703_1017","P20703_1018","P20703_1019"]),
+ #    expand("resultsH3K36/genematrix/{sample}.gz", sample = ["P20703_1016","P20703_1017","P20703_1018","P20703_1019"]), 
+ #     22 #    expand("resultsH3K36/heatmap/{sample}.png", sample = ["P20703_1016","P20703_1017","P20703_1018","P20703_1019"]), 
+ #      23 #    expand("resultsH3K36/genematrix_OPC_COPC/{sample}.gz", sample = ["P20703_1016","P20703_1017","P20703_1018","P20703_1019"]),
+ #       24 #    expand("resultsH3K36/heatmap_OPC_COPC/{sample}.png", sample = ["P20703_1016","P20703_1017","P20703_1018","P20703_1019"]),
+ #
+
+#rule computeMatrix:
+#  input:
+#    bigwig = "results/bigwig_out/{sample}.bw"
+#  output:
+#    matrix = "resultsH3K36/genematrix/{sample}.gz"
+#  threads: 8
+#  params:
+#    opc = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/opc_markers.gtf",
+#    copc = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/copc_markers.gtf",
+#    nfol = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/nfol_markers.gtf",
+#    mfol = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/mfol_markers.gtf",
+#    mol = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/mol_markers.gtf",
+#  shell:
+#    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig} -R {params.opc} {params.copc} {params.nfol} {params.mfol} {params.mol} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule computeMatrix:
+  input:
+    bigwig = "results/bigwig_out/{sample}.bw",
+  output:
+    matrix = "resultsH3K36/genematrix_specific/{sample}.gz",
+  threads: 8
+  params:
+    opc = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/markers_specific/opc_markers.gtf",
+    copc = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/markers_specific/copc_markers.gtf",
+    nfol = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/markers_specific/nfol_markers.gtf",
+    mfol = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/markers_specific/mfol_markers.gtf",
+    mol = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/markers_specific/mol_markers.gtf",
+    random = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/markers_specific/random_markers.gtf",
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig} -R {params.opc} {params.copc} {params.nfol} {params.mfol} {params.mol} {params.random} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000"
+
+rule plotHeadmap:
+  input:
+    matrix = "resultsH3K36/genematrix_specific/{sample}.gz",
+  output:
+    heatmap = "resultsH3K36/heatmap_specific/{sample}.png",
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; plotHeatmap -m {input.matrix} -out {output.heatmap} --heatmapWidth 15 --heatmapHeight 40"
+
+ 
+#rule OPC_COPC:
+#  input:
+#    bigwig = "results/bigwig_out/{sample}.bw"
+#  output:
+#    matrix = "resultsH3K36/genematrix_OPC_COPC/{sample}.gz"
+#  threads: 8
+#  params:
+#    opc = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/opc_markers.gtf",
+#    copc = "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/Mus_musculus/copc_markers.gtf",
+#  shell:
+#    "module load bioinfo-tools ; module load deepTools ; computeMatrix scale-regions -S {input.bigwig} -R {params.opc} {params.copc} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix} -m 5000" 
+
+#rule plotHeadmap:
+#  input:
+#    matrix = "resultsH3K36/genematrix_OPC_COPC/{sample}.gz",
+#  output:
+#    heatmap = "resultsH3K36/heatmap_OPC_COPC/{sample}.png",
+#  shell:
+#    "module load bioinfo-tools ; module load deepTools ; plotHeatmap -m {input.matrix} -out {output.heatmap} --heatmapWidth 15 --heatmapHeight 40"
+
+

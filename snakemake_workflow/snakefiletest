@@ -1,0 +1,57 @@
+configfile: "/proj/uppstore2017150/private/negi_new/abcam/newCT_pipeline/snakemake_workflow/newconfigfile.yaml"
+
+# print(config)
+# localrules: cat
+
+# include: "snakefilenew"
+
+import sys
+
+def check_gzip(x):
+  gzfiles = [1 if i.endswith("gz") else 0 for i in x]
+  nfiles  = len(x)
+  if (sum(gzfiles) == nfiles):
+    return("zcat")
+  elif (sum(gzfiles) ==0):
+    return("cat")
+  else:
+    sys.stderr.write("All files must be either zipped or unzipped")
+    sys.exit(1)
+
+rule all2:
+  input:
+    expand("results/genematrix_antibody_test/{antibody}.gz", antibody = ["H3K4me3","Pol2s5p"]), 
+    expand("results/heatmap_ab_test/{antibody}.png", antibody = ["H3K4me3","Pol2s5p"]),
+    
+
+rule computeMatrix H3K4me3:
+  input:
+    bigwig4 = "results/bigwig_out/P20703_1003.bw",
+    bigwig5 = "results/bigwig_out/P20703_1004.bw",
+    bigwig6 = "results/bigwig_out/P20703_1008.bw",
+    peak = "results/macs2/P20703_1008_peaks.narrowPeak",
+  output:
+    matrix = "results/genematrix_antibody_test/H3K4me3.gz"
+  threads: 8
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix reference-point -S {input.bigwig4} {input.bigwig5} {input.bigwig6} -R {input.peak} -b 5000  -a 5000 --transcriptID transcript -p {threads} -o {output.matrix}"
+
+rule computeMatrix Pol2:
+  input:
+    bigwig10 = "results/bigwig_out/P20703_1006.bw",
+    bigwig11 = "results/bigwig_out/P20703_1011.bw",
+    peak2 = "results/macs2/P20703_1006_peaks.narrowPeak",
+  output:
+    matrix = "results/genematrix_antibody_test/Pol2s5p.gz"
+  threads: 8
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; computeMatrix reference-point  -S {input.bigwig10} {input.bigwig11} -R {input.peak2} -b 2500 -a 2500 --transcriptID transcript -p {threads} -o {output.matrix}"
+
+rule plotHeadmap:
+  input:
+    matrix = "results/genematrix_antibody_test/{sample}.gz",
+  output:
+    heatmap = "results/heatmap_ab_test/{sample}.png",
+  threads: 4
+  shell:
+    "module load bioinfo-tools ; module load deepTools ; plotHeatmap -m {input.matrix} -out {output.heatmap} --heatmapWidth 10"

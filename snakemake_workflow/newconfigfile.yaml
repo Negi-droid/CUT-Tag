@@ -1,0 +1,99 @@
+samples:
+  P20703_1001:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1001/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1001_S1_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1001/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1001_S1_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1001/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1001_S1_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1001/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1001_S1_L002_R2_001.fastq.gz
+    #antibody: H3K27me3
+  P20703_1002:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1002/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1002_S2_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1002/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1002_S2_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1002/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1002_S2_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1002/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1002_S2_L002_R2_001.fastq.gz
+   # antibody: H3K27me3
+  P20703_1003:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1003/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1003_S3_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1003/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1003_S3_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1003/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1003_S3_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1003/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1003_S3_L002_R2_001.fastq.gz
+  P20703_1004:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1004/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1004_S4_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1004/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1004_S4_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1004/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1004_S4_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1004/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1004_S4_L002_R2_001.fastq.gz
+  P20703_1005:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1005/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1005_S5_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1005/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1005_S5_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1005/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1005_S5_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1005/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1005_S5_L002_R2_001.fastq.gz
+  P20703_1006:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1006/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1006_S6_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1006/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1006_S6_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1006/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1006_S6_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1006/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1006_S6_L002_R2_001.fastq.gz
+  P20703_1007:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1007/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1007_S7_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1007/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1007_S7_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1007/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1007_S7_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1007/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1007_S7_L002_R2_001.fastq.gz
+   # antibody: H3K27me3
+  P20703_1008:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1008/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1008_S8_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1008/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1008_S8_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1008/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1008_S8_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1008/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1008_S8_L002_R2_001.fastq.gz
+  P20703_1009:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1009/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1009_S9_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1009/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1009_S9_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1009/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1009_S9_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1009/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1009_S9_L002_R2_001.fastq.gz
+  P20703_1010:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1010/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1010_S10_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1010/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1010_S10_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1010/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1010_S10_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1010/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1010_S10_L002_R2_001.fastq.gz
+  P20703_1011:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1011/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1011_S11_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1011/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1011_S11_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1011/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1011_S11_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1011/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1011_S11_L002_R2_001.fastq.gz
+  P20703_1012:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1012/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1012_S12_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1012/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1012_S12_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1012/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1012_S12_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1012/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1012_S12_L002_R2_001.fastq.gz
+  P20703_1013:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1013/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1013_S13_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1013/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1013_S13_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1013/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1013_S13_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1013/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1013_S13_L002_R2_001.fastq.gz
+  P20703_1014:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1014/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1014_S14_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1014/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1014_S14_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1014/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1014_S14_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1014/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1014_S14_L002_R2_001.fastq.gz
+  P20703_1015:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1015/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1015_S15_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1015/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1015_S15_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1015/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1015_S15_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1015/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1015_S15_L002_R2_001.fastq.gz
+  P20703_1016:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1016/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1016_S16_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1016/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1016_S16_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1016/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1016_S16_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1016/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1016_S16_L002_R2_001.fastq.gz
+  P20703_1017:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1017/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1017_S17_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1017/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1017_S17_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1017/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1017_S17_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1017/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1017_S17_L002_R2_001.fastq.gz
+  P20703_1018:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1018/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1018_S18_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1018/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1018_S18_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1018/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1018_S18_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1018/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1018_S18_L002_R2_001.fastq.gz
+  P20703_1019:
+    R1_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1019/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1019_S19_L001_R1_001.fastq.gz
+    R1_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1019/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1019_S19_L002_R1_001.fastq.gz
+    R2_1: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1019/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1019_S19_L001_R2_001.fastq.gz
+    R2_2: /proj/uppstore2017150/private/negi_new/abcam/raw_data/CT_Abcam_K36me3/P20703_1019/02-FASTQ/210415_A00621_0382_AH5CNMDRXY/P20703_1019_S19_L002_R2_001.fastq.gz
