@@ -1,0 +1,2 @@
+# Filter protein coding transcripts
+awk '$3 == "transcript" && $22 ~ /protein_coding/ ' Mus_musculus.GRCm38.102.gtf > Mus_musculus.GRCm38.102_protein_coding_transcript.gtf

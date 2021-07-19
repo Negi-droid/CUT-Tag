@@ -1,0 +1,40 @@
+rule all:
+  input:
+    expand("results/PCA/PCA_plot.png", sample = ["bigwig_summary.npz"]),
+   #expand("results/bigwig_out/bigwig_summary.npz", sample = ["P20703_1001.bw,P20703_1002.bw, P20703_1003.bw,P20703_1004.bw,P20703_1005.bw,P20703_1006.bw,P20703_1007.bw,P20703_1008.bw,P20703_1009.bw,P20703_1010.bw,P20703_1011.bw. P20703_1012.bw,P20703_1013.bw,P20703_1014.bw,P20703_1015.bw"]),
+    #expand("results/PCA/PCA_plot.png"), sample = ["bigwig_summary.npz"]), 
+
+#create a multi bigwig summary 
+rule bigwig_summary:
+  input: 
+    bigwig1 = "results/bigwig_out/P20703_1001.bw",
+    bigwig2 = "results/bigwig_out/P20703_1002.bw",
+    bigwig3 = "results/bigwig_out/P20703_1003.bw",
+    bigwig4 = "results/bigwig_out/P20703_1004.bw",
+    bigwig5 = "results/bigwig_out/P20703_1005.bw",
+    bigwig6 = "results/bigwig_out/P20703_1006.bw",
+    bigwig7 = "results/bigwig_out/P20703_1007.bw",
+    bigwig8 = "results/bigwig_out/P20703_1008.bw",
+    bigwig9 = "results/bigwig_out/P20703_1009.bw",
+    bigwig10 = "results/bigwig_out/P20703_1010.bw",
+    bigwig11 = "results/bigwig_out/P20703_1011.bw",
+    bigwig12 = "results/bigwig_out/P20703_1012.bw",
+    bigwig13 = "results/bigwig_out/P20703_1013.bw",
+    bigwig14 = "results/bigwig_out/P20703_1014.bw",
+    bigwig15 = "results/bigwig_out/P20703_1015.bw",
+  output: 
+    bigwigsum_result = "results/bigwig_out/bigwig_summary.npz",
+  threads: 16
+  shell: 
+    "module load bioinfo-tools; module load deepTools; multiBigwigSummary bins -b {input.bigwig1} {input.bigwig2} {input.bigwig3} {input.bigwig4} {input.bigwig5} {input.bigwig6} {input.bigwig7} {input.bigwig8} {input.bigwig9} {input.bigwig10} {input.bigwig11} {input.bigwig12} {input.bigwig13} {input.bigwig14} {input.bigwig15} -o {output.bigwigsum_result}  -p 16"
+
+    
+# plot PCA 
+
+rule plot_PCA:
+  input:
+     bigwigsum = "results/bigwig_out/bigwig_summary.npz", 
+  output: 
+     out_PCA = "results/PCA/PCA_plot.png",
+  shell: 
+    "module load bioinfo-tools; module load deepTools; plotPCA -in {input.bigwigsum} -o {output.out_PCA}"

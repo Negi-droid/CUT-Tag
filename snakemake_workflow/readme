@@ -1,0 +1,6 @@
+#to generate a gtf file
+
+#step 1. filter the most significant genes in excel (top 50 or whatever)
+#step 2. create a vim txt file with the top 50 genes 
+#step 3. use this command to generate new gtf file with top 50 genes 
+grep -f opc_markers.txt ../Mus_musculus.GRCm38.102_protein_coding_transcript.gtf > opc_markers.gtf
